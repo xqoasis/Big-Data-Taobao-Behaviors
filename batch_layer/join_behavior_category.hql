@@ -1,13 +1,16 @@
 joincreate table delays (
-  year smallint, month tinyint, day tinyint, carrier string, flight string,
-  origin_name string, origin_city string, origin_code string, dep_delay string,
-  dest_name string, dest_city string, dest_code string, arr_delay string)
+    user_id string,
+    item_id string,
+    category_id string,
+    category_desc string,
+    behavior_type string,
+    behavior_timestamp int,
+    behavior_date string)
   stored as orc;
 
-insert overwrite table delays
-  select t.year as year, t.month as month, t.dayofmonth as day,
-  t.carrier as carrier, t.flightnum as flight,
-  t.origin as origin_name, t.origincityname as origin_city, so.code as origin_code, t.depdelay as dep_delay,
-  t.dest as dest_name, t.destcityname as dest_city, sd.code as dest_code, t.arrdelay as arr_delay
-  from ontime t join stations so join stations sd
-    on t.origin = so.name and t.dest = sd.name;
+insert overwrite table xqoasis_category
+  select b.user_id as user_id, b.item_id as item_id, b.category_id as category_id,
+  c.name as category_desc, b.behavior_type as behavior_type,
+  b.behavior_timestamp as behavior_timestamp, b.behavior_date as behavior_date
+  from xqoasis_user_behavior b join xqoasis_category c
+    on b.category_id = c.code;
