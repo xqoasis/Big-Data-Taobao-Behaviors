@@ -2,3 +2,6 @@ data_csv
 serving_layer
 .DS_Store
 xqoasis_mpcs53014.pem
+webServer/.idea
+webServer/node_modules
+
