@@ -1,4 +1,4 @@
-joincreate table delays (
+create table xqoasis_category_behavior (
     user_id string,
     item_id string,
     category_id string,
@@ -8,7 +8,7 @@ joincreate table delays (
     behavior_date string)
   stored as orc;
 
-insert overwrite table xqoasis_category
+insert overwrite table xqoasis_category_behavior
   select b.user_id as user_id, b.item_id as item_id, b.category_id as category_id,
   c.name as category_desc, b.behavior_type as behavior_type,
   b.behavior_timestamp as behavior_timestamp, b.behavior_date as behavior_date

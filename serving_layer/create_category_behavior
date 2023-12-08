@@ -1,0 +1,43 @@
+--- hbase
+
+create 'xqoasis_category_behavior', 'behavior'
+create 'xqoasis_category_id_desc', 'desc'
+
+--- hive
+beeline -u jdbc:hive2://localhost:10000/default -n hadoop -d org.apache.hive.jdbc.HiveDriver
+
+create external table xqoasis_category_behavior_sum (
+  category_desc string,
+  pv bigint,
+  fav bigint,
+  cart bigint,
+  buy bigint)
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ('hbase.columns.mapping' = ':key,behaviorSum:pv#b,behaviorSum:fav#b,behaviorSum:cart#b,behaviorSum:buy#b')
+TBLPROPERTIES ('hbase.table.name' = 'xqoasis_category_behavior_sum');
+
+
+insert overwrite table xqoasis_category_behavior_sum
+select category_desc,
+       sum(case when behavior_type = 'pv' then 1 else 0 end) as pv,
+       sum(case when behavior_type = 'fav' then 1 else 0 end) as fav,
+       sum(case when behavior_type = 'cart' then 1 else 0 end) as cart,
+       sum(case when behavior_type = 'buy' then 1 else 0 end) as buy
+from xqoasis_category_behavior
+group by category_desc
+order by buy desc;
+
+
+create external table xqoasis_category_id_desc (
+  category_id string,
+  category_desc string)
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ('hbase.columns.mapping' = ':key,desc:category_desc')
+TBLPROPERTIES ('hbase.table.name' = 'xqoasis_category_id_desc');
+
+insert overwrite table xqoasis_category_id_desc
+select xqoasis_category.code as category_id, xqoasis_category.name as category_desc
+from xqoasis_category;
+
+
+

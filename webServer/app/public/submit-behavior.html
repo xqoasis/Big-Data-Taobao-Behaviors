@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+  <head>
+    <title>Submit Behavior</title>
+    <link type="text/css" rel="stylesheet" href="/elegant-aero.css" />
+  </head>
+  <!-- Thanks to Mario C. E. Freese <mcefreese@gmail.com> for permission to use background image -->
+  <body style='background-image:URL("chrismas.jpg");background-repeat:no-repeat;background-position:center top;-webkit-background-size:100%;-moz-background-size:100%;-o-background-size:100%;background-size: 100%;'>
+    <p style="margin-bottom:5px"/>
+    <h2 class="elegant-aero" style="margin-left:30%;text-align:center;display:inline-block;color:#5E5E5E;background:#FFFFFF">&nbsp;Submit weather report&nbsp;</h2>
+    <form action="/newbehavior.html" style="background:#FFFFFF;width:60%;margin:auto"  method="get" class="elegant-aero">
+      <label>
+          <span>User id:</span> <input type="text" name="user_id" placeholder="0" required="required"/>
+          <span>Item id:</span> <input type="text" name="item_id" placeholder="0" required="required"/>
+          <span>Category id:</span> <input type="text" name="category_id" placeholder="1000858" required="required"/>
+      </label>
+      <label style="font-weight:bold;color:#5E5E5E">
+	&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;Page View <input type="checkbox" name="pv" value="1"/>
+      Favorite <input type="checkbox" name="fav" value="1"/>
+      Cart <input type="checkbox" name="cart" value="1"/>
+      Buy <input type="checkbox" name="buy" value="1"/>
+      </label>
+      <label>
+	<span>&nbsp;</span><input type="submit" value="Submit">
+      </label>
+    </form>
+    <iframe frameBorder="0" name="results_iframe" style="width:100%"/>
+  </body>
+</html>
